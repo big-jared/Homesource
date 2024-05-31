@@ -6,21 +6,20 @@ import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.config.ApplicationConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils.create
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.math.BigDecimal
 import java.sql.*
+import javax.sql.DataSource
 
 
 object Db {
     fun init(config: ApplicationConfig) {
-        Database.connect(hikari(config))
-        transaction {
-            create(UserDao)
-            create(AddressDao)
-        }
+        val dataSource = hikari(config)
+        Database.connect(dataSource)
+        runFlyway(dataSource)
     }
 
     private fun hikari(config: ApplicationConfig): HikariDataSource {
@@ -34,6 +33,16 @@ object Db {
         hikariConfig.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
         hikariConfig.validate()
         return HikariDataSource(hikariConfig)
+    }
+
+    private fun runFlyway(datasource: DataSource) {
+        val flyway = Flyway.configure().dataSource(datasource).load()
+        try {
+            flyway.info()
+            flyway.migrate()
+        } catch (error: Exception) {
+            throw error
+        }
     }
 
     suspend fun <T> dbQuery(block: Transaction.() -> T): T = withContext(Dispatchers.IO) {

@@ -1,6 +1,5 @@
 package org.sodgutt.homesource
 
-import Greeting
 import Profile
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -12,9 +11,11 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.sessions.*
+import org.apache.commons.codec.digest.DigestUtils
 import org.jetbrains.exposed.sql.and
 import org.sodgutt.homesource.Db.dbQuery
 import org.jetbrains.exposed.sql.select
+import org.koin.ktor.plugin.Koin
 
 fun main() {
     embeddedServer(Netty, port = 8081, host = "0.0.0.0", module = Application::main)
@@ -31,6 +32,16 @@ fun Application.main() {
             cookie.extensions["SameSite"] = "strict"
         }
     }
+    install(Koin) {
+        modules(
+            listOf(
+//                appModule,
+//                authModule,
+//                jsonModule
+            )
+        )
+    }
+
     Db.init(environment.config)
 
     install(Authentication) {
