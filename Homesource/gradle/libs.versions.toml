@@ -14,6 +14,7 @@ compose-plugin = "1.6.10"
 junit = "4.13.2"
 kotlin = "2.0.0"
 ktor = "2.3.11"
+ktor-client = "3.0.0-wasm2"
 logback = "1.5.6"
 postgresql = "42.2.2"
 exposed = "0.17.14"
@@ -27,6 +28,9 @@ koin = "3.6.0-Beta4"
 koin-compose = "1.2.0-Beta4"
 flyway = "10.13.0"
 mockk = "1.13.11"
+voyager = "1.1.0-beta01"
+kottie = "1.8.5"
+kolor = "1.6.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -50,8 +54,16 @@ koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-com
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin"}
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
-logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+#frontend
+voyager-navigator = { group = "cafe.adriel.voyager", name = "voyager-navigator", version.ref = "voyager" }
+voyager-tabNavigator = { group = "cafe.adriel.voyager", name = "voyager-tab-navigator", version.ref = "voyager" }
+voyager-transitions = { group = "cafe.adriel.voyager", name = "voyager-transitions", version.ref = "voyager" }
+voyager-bottomsheet = { group = "cafe.adriel.voyager", name = "voyager-bottom-sheet-navigator", version.ref = "voyager" }
+material-kolor = { group = "com.materialkolor", name = "material-kolor", version.ref = "kolor" }
+kottie = { group = "io.github.ismai117", name = "kottie", version.ref = "kottie" }
 
+#backend
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql"}
 exposed = { module = "org.jetbrains.exposed:exposed", version.ref = "exposed"}
 hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
@@ -71,16 +83,15 @@ ktor-server-call-logging = { module = "io.ktor:ktor-server-call-logging", versio
 ktor-serialization = { module = "io.ktor:ktor-serialization", version.ref = "ktor" }
 
 #ktor client
-ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
-ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
-ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
-ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
-ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor-client" }
+ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor-client" }
+ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor-client" }
+ktor-client-java = { group = "io.ktor", name = "ktor-client-java", version.ref = "ktor-client" }
+ktor-client-js = { group = "io.ktor", name = "ktor-client-js", version.ref = "ktor-client" }
 
 [bundles]
-front-end = ["koin-compose"]
-ktor-client = ["ktor-client-core", "ktor-client-cio", "ktor-client-logging", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
+front-end = ["koin-compose", "voyager-bottomsheet", "voyager-navigator", "voyager-tabNavigator", "voyager-transitions", "kottie", "material-kolor"]
+ktor-client = ["ktor-client-core", "ktor-client-darwin", "ktor-client-java", "ktor-client-js", "ktor-client-android"]
 ktor-backend = ["ktor-server-core", "ktor-server-netty", "ktor-server-auth", "ktor-server-compression", "ktor-server-default-headers", "ktor-server-call-logging", "koin-ktor", "koin-logger", "flyway"]
 database = ["postgresql", "exposed", "hikari", "commons-codec", "jdbc-named-parameters", "kquery"]
 common = ["kotlinx-datetime", "kotlinx-serialization", "koin-core"]
