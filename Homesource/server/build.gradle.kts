@@ -20,5 +20,8 @@ dependencies {
     implementation(libs.bundles.common)
 
     testImplementation(libs.ktor.server.tests)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.ktor.serialization)
     testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.mockk)
 }
