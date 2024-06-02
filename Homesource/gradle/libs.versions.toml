@@ -59,6 +59,9 @@ voyager-navigator = { group = "cafe.adriel.voyager", name = "voyager-navigator",
 voyager-tabNavigator = { group = "cafe.adriel.voyager", name = "voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { group = "cafe.adriel.voyager", name = "voyager-transitions", version.ref = "voyager" }
 voyager-bottomsheet = { group = "cafe.adriel.voyager", name = "voyager-bottom-sheet-navigator", version.ref = "voyager" }
+voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
+voyager-viewmodel = { module = "cafe.adriel.voyager:voyager-lifecycle-kmp", version.ref = "voyager" }
+voyager-screenmodel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 material-kolor = { group = "com.materialkolor", name = "material-kolor", version.ref = "kolor" }
 kottie = { group = "io.github.ismai117", name = "kottie", version.ref = "kottie" }
 
@@ -90,8 +93,7 @@ ktor-client-java = { group = "io.ktor", name = "ktor-client-java", version.ref =
 ktor-client-js = { group = "io.ktor", name = "ktor-client-js", version.ref = "ktor-client" }
 
 [bundles]
-front-end = ["koin-compose", "voyager-bottomsheet", "voyager-navigator", "voyager-tabNavigator", "voyager-transitions", "kottie", "material-kolor"]
-ktor-client = ["ktor-client-core", "ktor-client-darwin", "ktor-client-java", "ktor-client-js", "ktor-client-android"]
+front-end = ["koin-compose", "voyager-bottomsheet", "voyager-navigator", "voyager-tabNavigator", "voyager-transitions", "voyager-screenmodel", "kottie", "material-kolor"]
 ktor-backend = ["ktor-server-core", "ktor-server-netty", "ktor-server-auth", "ktor-server-compression", "ktor-server-default-headers", "ktor-server-call-logging", "koin-ktor", "koin-logger", "flyway"]
 database = ["postgresql", "exposed", "hikari", "commons-codec", "jdbc-named-parameters", "kquery"]
 common = ["kotlinx-datetime", "kotlinx-serialization", "koin-core"]

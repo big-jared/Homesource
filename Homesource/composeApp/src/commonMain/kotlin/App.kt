@@ -1,44 +1,32 @@
-import androidx.compose.material3.Text
-import androidx.compose.material3.Typography
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import com.materialkolor.DynamicMaterialTheme
-import com.materialkolor.PaletteStyle
+import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.bottomSheet.BottomSheetNavigator
+import cafe.adriel.voyager.transitions.SlideTransition
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.core.logger.Level
-import org.koin.dsl.module
-import kotlin.random.Random
 
-class Myfactory {
-    val id = Random(0).nextInt()
-}
-
-val mod = module {
-    factory { Myfactory() }
-}
-
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 @Preview
 fun App() {
     KoinApplication(application = {
-        modules(mod)
+        modules(preAuthModule, stylesModule)
         printLogger(Level.DEBUG)
     }) {
         AppTheme {
-            Text("Welcome to grade pal")
+            Surface {
+                BottomSheetNavigator() {
+                    Navigator(SignInScreen()) { navigator ->
+                        SlideTransition(navigator)
+                    }
+                }
+            }
         }
     }
-}
-
-@Composable
-fun AppTheme(content: @Composable () -> Unit) {
-    DynamicMaterialTheme(
-        animate = true,
-        seedColor = Color(0xff27ae60),
-        style = PaletteStyle.FruitSalad,
-        isExtendedFidelity = false,
-        typography = Typography(),
-        content = content
-    )
 }
